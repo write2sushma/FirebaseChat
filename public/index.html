@@ -1,0 +1,53 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+    <meta data-page-description="" name="description" content="Women Techmakers is your community as a women in tech in Hamburg. Join one of our Meetups and see.">
+    
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Women Techmakers Hamburg Community | Welcome</title>
+<link rel="stylesheet" href="css/style.css">
+    <script src="https://use.fontawesome.com/webfontloader/1.6.24/webfontloader.js"></script>
+<!--  =============================================================================
+    Add Firebase here start
+    ============================================================================= */-->
+    
+    
+    <script src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyB1Ia0Gx-1yPI9_s7m3isrLAyx_EUlTkzQ",
+        authDomain: "awesometechmakers.firebaseapp.com",
+        databaseURL: "https://awesometechmakers.firebaseio.com",
+        storageBucket: "awesometechmakers.appspot.com",
+      };
+      firebase.initializeApp(config);
+      
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            var content = document.getElementById("content");
+            console.log("Logged in");
+            
+            var chatRef = firebase.database().ref("awesometechmakers");
+            window.setInterval(function() {
+                chatRef.push({"message": "Hello World! "+ new Date().getTime(), "username": "sush"});                             
+            }, 1000);
+            
+            chatRef.on("child_added", function(value) {
+                content.innerHTML = value.val().message + "<br />"+ content.innerHTML;
+            });
+        }
+        else {
+            console.log("Not logged in");
+        }
+      });
+    </script>        
+</head>
+<body>
+     <div id="content"></div>
+</body>
+</html>
+    
+    
+ 
